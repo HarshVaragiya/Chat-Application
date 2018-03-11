@@ -16,3 +16,5 @@ this application is transmitting data in plaintext(encoded text but..) it can be
 data can be easily intercepted with wireshark or similar tool.
 
 Have Fun!
+
+It uses Sockets to communicate and also has threading so you can recieve messages while you send messages!
