@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 # SERVER CODE
 # You Can Change the Port Server Listens by passing argument in command line directly
 # Server Code To be Started before Client, or Connection will be refused
