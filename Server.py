@@ -1,4 +1,11 @@
-#SERVER CODE
+#!/usr/bin/python3
+
+# SERVER CODE
+# You Can Change the Port Server Listens by passing argument in command line directly
+# Server Code To be Started before Client, or Connection will be refused
+# NOT SECURE ! Data Can Be easily intercepted using Wireshark or other tools
+# DO NOT Transmit Sensitive Data Over this Application !
+# Author : xtreme.research@gmail.com
 
 import sys
 import socket
