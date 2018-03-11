@@ -1,9 +1,7 @@
 # Chat-Application
 A Simple Chat Application Using Python
 
-Server side : python3 Server.py
-or Server side : python3 Server <port>
-  
+Server side : python3 Server.py  
   
 Client Side : python3 Client.py
 
