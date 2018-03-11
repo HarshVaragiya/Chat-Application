@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 # CLIENT CODE
 # Server Code Must Be Running Before Starting Client or Connection will be refused
 # NOT SECURE ! Data Can Be easily intercepted using Wireshark or other tools
