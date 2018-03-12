@@ -24,7 +24,7 @@ class myThread(threading.Thread):
         self.threadID = id
 
     def run(self):
-        print("[+] Listing On Thread "+str(self.threadID))
+        print("[+] Listening On Thread "+str(self.threadID))
         while 1:
             data = s.recv(1024)
             data_recieved = data.decode()
