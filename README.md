@@ -1,5 +1,7 @@
 # Chat-Application
-A Simple Chat Application Using Python
+A Chat Application Using Python With AES Encryption 
+
+requires pyaes Module to run.
 
 Server side : python3 Server.py  
   
