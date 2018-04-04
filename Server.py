@@ -91,7 +91,7 @@ Listening_Thread.start()
 while 1:
     sending_data = str(input(""))
     if(sending_data=="quit()"):
-        Listening_Thread._stop()
+
         exit()
     sending_bytes = process_text(sending_data)
     enc_bytes = []
