@@ -1,22 +1,53 @@
 # CLIENT CODE
+# Update 1.1 AES Encryption Now Included :p
+# AES Block Cipher 16 bytes block size as supported by pyaes
 # Server Code Must Be Running Before Starting Client or Connection will be refused
-# NOT SECURE ! Data Can Be easily intercepted using Wireshark or other tools
-# DO NOT Transmit Sensitive Data Over this Application !
 # Author : xtreme.research@gmail.com
 
-
+import os
+try:
+    import pyaes # run : $ pip install pyaes
+except ImportError:
+    print("Install pyaes library!")
+    print("windows : python -m pip insatll pyaes")
+    print("linux   : pip install pyaes ")
+    exit()
 import socket
 import threading
+import hashlib
 
-
-HOST = '0.0.0.0'
-PORT = 5559
 print("[+] Client Running ")
 HOST = str(input("[+] Enter Destination IP : "))
 PORT = int(input("[+] Enter Port : "))
-
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
+
+key = str(input("Enter AES Encryption Key For Connection : "))
+hashed = hashlib.sha256(key.encode()).digest()
+aes = pyaes.AES(hashed)
+
+def process_bytes(bytess):
+    ret = []
+    while(len(bytess)>=16):
+        if(len(bytess)>=16):
+            byts = bytess[:16]
+            ret.append(byts)
+            bytess = bytess[16:]
+        else:
+            print("Block Size Mismatch ")
+    return ret
+def process_text(data): #take data in as a string return 16 bytes block of bytes list
+    streams = []
+    while (len(data)>0):
+        if(len(data)>=16):
+            stream = data[:16]
+            data = data[16:]
+        else:
+            stream = data + ("~"*(16-len(data)))
+            data = ''
+        stream_bytes = [ ord(c) for c in stream]
+        streams.append(stream_bytes)
+    return streams
 
 class myThread(threading.Thread):
     def __init__(self,id):
@@ -27,16 +58,31 @@ class myThread(threading.Thread):
         print("[+] Listening On Thread "+str(self.threadID))
         while 1:
             data = s.recv(1024)
-            data_recieved = data.decode()
-            if(data_recieved!=""):
-                print("Recieved : "+str(data_recieved))
+            if(data!=""):
+                processed_data = process_bytes(data)
+                print("Recieved : ",end="")
+                for dat in processed_data:
+                    decrypted = aes.decrypt(dat)
+                    mess=''
+                    for ch in decrypted:
+                        if(chr(ch)!='~'):
+                            mess+=str(chr(ch))
+                    print (str(mess),end= "")
+                print("")
 
 Listening_Thread = myThread(1)
+Listening_Thread.daemon = True
 Listening_Thread.start()
 
 while 1:
-    sending_data = input("")
-    sending_bytes = sending_data.encode()
-    s.send(sending_bytes)
-    #print("Sent : "+str(sending_data))
+    sending_data = str(input(""))
+    if(sending_data=="quit()"):
+        exit()
+    sending_bytes = process_text(sending_data)
+    enc_bytes = []
+    for byte in sending_bytes:
+        ciphertext = aes.encrypt(byte)
+        enc_bytes += bytes(ciphertext)
+    #print("Sending : "+str(sending_data))
+    s.send(bytes(enc_bytes))
 s.close()
