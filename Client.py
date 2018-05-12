@@ -53,7 +53,10 @@ class myThread(threading.Thread):
     def __init__(self,id):
         threading.Thread.__init__(self)
         self.threadID = id
-
+        
+    def stop(self):
+        self.is_alive = False
+        
     def run(self):
         print("[+] Listening On Thread "+str(self.threadID))
         while 1:
@@ -77,6 +80,8 @@ Listening_Thread.start()
 while 1:
     sending_data = str(input(""))
     if(sending_data=="quit()"):
+        Listening_Thread.stop()
+        s.close()
         exit()
     sending_bytes = process_text(sending_data)
     enc_bytes = []
@@ -85,4 +90,4 @@ while 1:
         enc_bytes += bytes(ciphertext)
     #print("Sending : "+str(sending_data))
     s.send(bytes(enc_bytes))
-s.close()
+s.close() #code never reaches here , but just in case ... :p
