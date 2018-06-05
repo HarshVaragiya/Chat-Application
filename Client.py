@@ -22,7 +22,7 @@ PORT = int(input("[+] Enter Port : "))
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((HOST, PORT))
 
-key = str(input("Enter AES Encryption Key For Connection : "))
+key = str(input("[+] Enter AES Encryption Key For Connection : "))
 hashed = hashlib.sha256(key.encode()).digest()
 aes = pyaes.AES(hashed)
 
