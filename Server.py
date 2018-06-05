@@ -35,7 +35,7 @@ s.listen(1)
 conn, addr = s.accept()
 print('[+] Connected by ', addr)
 
-key = str(input("Enter AES Encryption Key For Connection : "))
+key = str(input("[+] Enter AES Encryption Key For Connection : "))
 hashed = hashlib.sha256(key.encode()).digest()
 aes = pyaes.AES(hashed)
 
