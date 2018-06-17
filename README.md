@@ -1,11 +1,27 @@
 # Chat-Application
 A Chat Application Using Python With AES Encryption 
 
-requires pyaes Module to run.
+ 
+# Requirements:
+pyaes module - for pure python AES implementation 
 
-Server side : python3 Server.py  
+# Module Installation :
+
+'''bash
+pip install pyaes
+'''
+
+Server side :
+
+'''bash
+python3 Server.py
+’''
   
-Client Side : python3 Client.py
+Client Side : 
+'''bash
+
+python3 Client.py
+'''
 
 Chat With Users Using their IP Address and Port Number Chosen to Communicate. (Kinda Like netcat)
 
@@ -20,4 +36,4 @@ It uses Sockets to communicate and also has threading so you can recieve message
 # Future : 
 1. Having a key exchange mechanism like diffie-hellman key exchange or key exchange using RSA public key encryption to exchange keys securely without needing to use hash of pre-shared-key .
 2. Sending hash of message string to later check the data integrity and dislay only verified messages.
-3. Sendinf 
+3. Sending Data files or some other data ..
