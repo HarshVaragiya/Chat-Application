@@ -16,3 +16,8 @@ Should work out of the box, atleast for device on LAN
 Have Fun!
 
 It uses Sockets to communicate and also has threading so you can recieve messages while you send messages!
+
+# Future : 
+1. Having a key exchange mechanism like diffie-hellman key exchange or key exchange using RSA public key encryption to exchange keys securely without needing to use hash of pre-shared-key .
+2. Sending hash of message string to later check the data integrity and dislay only verified messages.
+3. Sendinf 
