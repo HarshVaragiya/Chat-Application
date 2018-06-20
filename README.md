@@ -34,3 +34,4 @@ It uses Sockets to communicate and also has threading so you can recieve message
 Dropping the use of hash of pre-shared-key is a good move because it can be very easy to crack using Rainbow Tables, as it does not use Salting. 
 2. Sending hash of message string to later check the data integrity and dislay only verified messages.
 3. Sending Data files or some other data ..
+4. Using standard AES Block Cipher implementations (still 256 Bits though) as used in PyCryptoDome
