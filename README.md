@@ -1,5 +1,5 @@
 # Chat-Application
-A Chat Application Using Python With 256 Bit AES Encryption 
+A Chat Application Using Python With 256 Bit AES Encryption.
 
 # Requirements:
 pyaes module - for pure python AES implementation 
@@ -35,3 +35,8 @@ Dropping the use of hash of pre-shared-key is a good move because it can be very
 2. Sending hash of message string to later check the data integrity and dislay only verified messages.
 3. Sending Data files or some other data ..
 4. Using standard AES Block Cipher implementations (still 256 Bits though) as used in PyCryptoDome
+
+# Updates:
+1. Added Message Verification to check message integrity, along with message timestamps.
+2. Also Tried to Solve the problem where Socket Object closes from one end and crashes the other side.
+3. Updated Screenshot.
