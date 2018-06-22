@@ -17,10 +17,12 @@ import sys
 import socket
 import threading
 import hashlib
+import json
+from datetime import datetime
 
 HOST = '0.0.0.0'
 if(len(sys.argv)==1):
-    PORT = 5558
+    PORT = 5555
 elif(len(sys.argv)==2):
     PORT=int(sys.argv[1])
 
@@ -35,9 +37,25 @@ s.listen(1)
 conn, addr = s.accept()
 print('[+] Connected by ', addr)
 
-key = str(input("[+] Enter AES Encryption Key For Connection : "))
+key = str(input('[+] AES Pre-Shared-Key for the Connection : '))
 hashed = hashlib.sha256(key.encode()).digest()
 aes = pyaes.AES(hashed)
+
+def verify_and_display(recv_dict):
+    timestamp = recv_dict['timestamp']
+    recv_hash = recv_dict['hash']
+    message   = recv_dict['message']
+    mess_hash = hashlib.sha256(str(message).encode('utf-8')).hexdigest()
+    SET_LEN = 80
+    if (mess_hash == recv_hash):
+        tag = str('☑')
+    else:
+        tag = str('☒')
+    spaces = SET_LEN - len(str(message)) - len('Received : ') - 1
+    if spaces > 0 :
+        space = ' '*spaces
+        sentence = 'Received : ' + str(message) + space + tag + '  ' + timestamp
+        print(sentence)
 
 def process_bytes(bytess):
     ret = []
@@ -74,30 +92,51 @@ class myThread(threading.Thread):
     def run(self):
         print("[+] Listening On Thread "+str(self.threadID))
         while 1:
-            data = conn.recv(1024)
-            if(data!=""):
-                processed_data = process_bytes(data)
-                print("Recieved : ",end="")
-                for dat in processed_data:
-                    decrypted = aes.decrypt(dat)
-                    mess=''
-                    for ch in decrypted:
-                        if(chr(ch)!='~'):
-                            mess+=str(chr(ch))
-                    print (str(mess),end= "")
-                print("")
+            try:
+                data = conn.recv(1024)
+                if(data!=""):
+                    mess = ''
+                    processed_data = process_bytes(data)
+                    for dat in processed_data:
+                        decrypted = aes.decrypt(dat)
+                        for ch in decrypted:
+                            if(chr(ch)!='~'):
+                                mess+=str(chr(ch))
+                    try:
+                        data_recv = json.loads(mess)
+                        #message = str(data_recv['message'])
+                        verify_and_display(data_recv)
+                    except:
+                        print('Unrecognised Data or Broken PIPE ')
+            except ConnectionResetError:
+                print('Broken PIPE !')
+                exit(0)
+                self.stop()
+
 
 Listening_Thread = myThread(1)
 Listening_Thread.daemon = True
 Listening_Thread.start()
 
 while 1:
-    sending_data = str(input(""))
+    try:
+        sending_data = str(input(""))
+    except KeyboardInterrupt:
+        conn.close()
+        exit(-1)
     if(sending_data=="quit()"):
         Listening_Thread.stop()
         conn.close()
         exit()
-    sending_bytes = process_text(sending_data)
+    timestamp = str(datetime.now())[11:19]
+    mess_hash = hashlib.sha256(str(sending_data).encode('utf-8')).hexdigest()
+    send_data = {
+        "timestamp" : timestamp,
+        "message"   : sending_data,
+        "hash"      : mess_hash
+    }
+    send_json_string = json.dumps(send_data)
+    sending_bytes = process_text(send_json_string)
     enc_bytes = []
     for byte in sending_bytes:
         ciphertext = aes.encrypt(byte)
