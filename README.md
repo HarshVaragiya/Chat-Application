@@ -1,5 +1,5 @@
 # Chat-Application
-A Chat Application Using Python With 256 Bit AES Encryption.
+A Chat Application Using Python With 256 Bit AES Encryption.Now Has VideoChat Feature(unencrypted till now)
 
 # Requirements:
 pyaes module - for pure python AES implementation 
@@ -36,8 +36,10 @@ Dropping the use of hash of pre-shared-key is a good move because it can be very
 3. Sending Data files or some other data ..
 4. Using standard AES Block Cipher implementations (still 256 Bits though) as used in PyCryptoDome
 5. Using Standard MAC To secure Block Data .
+6. VideoChat.
 
 # Updates:
 1. Added Message Verification to check message integrity, along with message timestamps.
 2. Also Solved the problem where Socket Object closes from one end and crashes the other side.
 3. Updated Screenshot.
+4. VideoChat.
