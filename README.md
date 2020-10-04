@@ -7,9 +7,9 @@ You can use other modules like pycrypto(not recommended because it is vulnerable
 
 # Module Installation :
 
-Installing PyAES Module :
+Installing Needed Module For This Program :
 ```bash
-pip install pyaes
+pip install -r requirements.txt
 ```
 # Usage :
 The Server Side must be running first.
