@@ -6,7 +6,7 @@
 
 import os
 try:
-    import pyaes # run : $ pip install pyaes
+    import pyaes
 except ImportError:
     print("Install pyaes library!")
     print("windows : python -m pip insatll pyaes")
