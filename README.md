@@ -7,7 +7,7 @@ You can use other modules like pycrypto(not recommended because it is vulnerable
 
 # Module Installation :
 
-Installing Needed Module For This Programme :
+Installing Needed Module For This Program :
 ```bash
 pip install -r requirements.txt
 ```
